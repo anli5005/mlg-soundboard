@@ -161,7 +161,7 @@ angular.module("MLGSoundboard", ["ngMaterial"])
         },
         {
           name: "Tactical Nuke",
-          sound: "sound/TACTICAL NUKE.mp3",
+          sound: "sound/tactical nuke.mp3",
           image: "img/nuke.png",
           width: 2,
           height: 1
