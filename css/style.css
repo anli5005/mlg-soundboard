@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: transparent;
+}
+
+.background {
+  transition: background-image 0.4s;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-size: cover;
+}
+
+.sound-section {
+  padding: 8px;
+  width: 100%;
+  max-width: 720px;
+  margin: 1em auto 0 auto;
+  background-color: white;
+  border-radius: 2px;
+}
+
+md-grid-tile {
+  background-color: #999999;
+  background-size: cover;
+}
+
+md-grid-tile .md-button {
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0;
+}
+
+md-grid-tile md-icon {
+  color: white;
+}
+
+.no-image md-grid-tile-footer {
+  background-color: transparent;
+  height: 100%;
+  vertical-align: center;
+}
+
+.no-image md-grid-tile-footer figcaption,
+.no-image md-grid-tile-footer h3 {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}

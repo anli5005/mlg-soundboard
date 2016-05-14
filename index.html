@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="MLGSoundboard">
+  <head>
+    <title>MLG Soundboard</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc3/angular-material.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc3/angular-material.min.js"></script>
+
+    <script src="js/mlg.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body ng-controller="SoundboardController as soundboard">
+    <div class="sound-section" md-whiteframe="8">
+      <h1 class="md-display-4">MLG Soundboard</h1>
+      <p class="md-display-3">by anli5005</p>
+      <p class="md-headline">Featuring sounds from various YouTube videos</p>
+      <p>Powered by Angular and 420 doges</p>
+    </div>
+    <div class="sound-section" md-whiteframe="2" ng-repeat="section in sounds">
+      <h2 class="md-headline">{{section.name}}</h2>
+      <md-grid-list md-cols="6" md-row-height="1:1" md-gutter="8px">
+        <md-grid-tile ng-repeat="sound in section.sounds" md-rowspan="{{sound.height}}" md-colspan="{{sound.width}}" ng-click="playSound(sound)" ng-class="sound.image ? '' : 'no-image'" ng-style="{'background-image': 'url(\'' + sound.image + '\')'}">
+          <md-grid-tile-footer><h3 class="md-title">{{sound.name}}</h3></md-grid-tile-footer>
+          <md-button ng-if="sound.full" ng-href="{{sound.full}}" class="md-icon-button"><md-icon>launch</md-icon></md-button>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
+    <div class="background" ng-style="backgroundImage()"></div>
+  </body>
+</html>
