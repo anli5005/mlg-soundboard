@@ -1,28 +1,50 @@
 angular.module("MLGSoundboard", ["ngMaterial"])
-  .controller("SoundboardController", function($scope, sounds, defaultBackground) {
+  .controller("SoundboardController", function($scope, sounds, defaultBackground, $window) {
     $scope.sounds = sounds;
     $scope.currentSound = undefined;
-    $scope.playSound = function(sound) {
+    $scope.currentSoundName = "No Sound";
+    $scope.playSound = function(sound, event) {
+      event.preventDefault();
       if (sound.sound) {
-        var previous = $scope.currentSound;
+        $scope.currentSound ? $scope.currentSound.pause() : angular.noop();
         $scope.currentSound = new Audio(sound.sound);
+        $scope.currentSound.loop = $scope.repeat;
         $scope.currentSound.play();
-        if (previous) {
-          previous.pause();
-        }
+        $scope.currentSoundName = sound.name;
         if (sound.image) {
           $scope.background = sound.image;
         } else {
           $scope.background = defaultBackground;
         }
       }
-    }
+    };
+    $window.setInterval(function() {
+      $scope.$apply();
+    }, 100);
+
+    $scope.play = function() {
+      if ($scope.currentSound) {
+        ($scope.currentSound.paused || $scope.currentSound.ended) ? $scope.currentSound.play() : $scope.currentSound.pause();
+      }
+    };
+
+    $scope.repeat = false;
+    $scope.toggleRepeat = function() {
+      $scope.repeat = !$scope.repeat;
+      if ($scope.currentSound) {
+        $scope.currentSound.loop = $scope.repeat;
+      }
+    };
 
     $scope.background = defaultBackground;
     $scope.backgroundImage = function() {
       return {"background-image": "url('" + $scope.background + "')"}
-    }
+    };
   })
+  .filter("timeFilter", function() { return function(input) {
+    var seconds = Math.floor(input);
+    return Math.floor(seconds / 60).toString() + ":" + ((seconds % 60 < 10) ? "0" : "") + (seconds % 60).toString();
+  }})
   .value("defaultBackground", "img/mlg.jpg")
   .value("sounds", [
     {

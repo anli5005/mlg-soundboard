@@ -25,12 +25,22 @@
     <div class="sound-section" md-whiteframe="2" ng-repeat="section in sounds">
       <h2 class="md-headline">{{section.name}}</h2>
       <md-grid-list md-cols="6" md-row-height="1:1" md-gutter="8px">
-        <md-grid-tile ng-repeat="sound in section.sounds" md-rowspan="{{sound.height}}" md-colspan="{{sound.width}}" ng-click="playSound(sound)" ng-class="sound.image ? '' : 'no-image'" ng-style="{'background-image': 'url(\'' + sound.image + '\')'}">
+        <md-grid-tile ng-repeat="sound in section.sounds" md-rowspan="{{sound.height}}" md-colspan="{{sound.width}}" ng-click="playSound(sound, $event)" ng-class="sound.image ? '' : 'no-image'" ng-style="{'background-image': 'url(\'' + sound.image + '\')'}">
           <md-grid-tile-footer><h3 class="md-title">{{sound.name}}</h3></md-grid-tile-footer>
           <md-button ng-if="sound.full" ng-href="{{sound.full}}" class="md-icon-button"><md-icon>launch</md-icon></md-button>
         </md-grid-tile>
       </md-grid-list>
     </div>
+
+    <div md-whiteframe="10" class="sound-controls" layout="row" layout-align="start center">
+      <span>{{currentSoundName}}</span>
+      <md-button class="md-icon-button" ng-disabled="!currentSound" ng-click="play()"><md-icon>{{(!currentSound || currentSound.paused || currentSound.ended) ? "play_arrow" : "pause"}}</md-icon></md-button>
+      <span class="currentTime">{{(currentSound.currentTime || 0) | timeFilter}}</span>
+      <md-slider flex min="0" max="{{currentSound.duration}}" ng-disabled="!currentSound" ng-model="currentSound.currentTime"></md-slider>
+      <span class="length">{{(currentSound.duration || 0) | timeFilter}}</span>
+      <md-button class="md-icon-button" ng-disabled="!currentSound" ng-class="repeat ? 'md-primary' : ''" ng-click="toggleRepeat()"><md-icon>repeat</md-icon></md-button>
+    </div>
+
     <div class="background" ng-style="backgroundImage()"></div>
   </body>
 </html>
